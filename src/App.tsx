@@ -1,62 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
-import Header from "./components/Header";
-import Hero from "./components/Hero";
-import HowItWorks from "./components/HowItWorks";
-import PricingPlans from "./components/PricingPlans";
-import FAQ from "./components/FAQ";
-import CTA from "./components/CTA";
-import Footer from "./components/Footer";
-
-function App() {
-  // Pastikan hero diset default agar tidak undefined
-  const [isVisible, setIsVisible] = useState<Record<string, boolean>>({
-    hero: true,
-  });
-
-  const [selectedPlan, setSelectedPlan] = useState<any>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const id = entry.target.getAttribute("id");
-          if (entry.isIntersecting && id) {
-            setIsVisible((prev) => ({ ...prev, [id]: true }));
-          }
-        });
-      },
-      {
-        threshold: 0.1,
-        rootMargin: "0px 0px -50px 0px",
-      }
-    );
-
-    const sections = document.querySelectorAll("[data-animate]");
-    sections.forEach((section) => observer.observe(section));
-
-    return () => observer.disconnect();
-  }, []);
-
-  const openModalWithPlan = (plan: any) => {
-    setSelectedPlan(plan);
-    console.log("Paket dipilih:", plan);
-  };
-
-  return (
-    <div className="min-h-screen bg-gradient-to-b from-black via-gray-900 to-black text-white font-poppins">
-      <Header />
-      <Hero isVisible={isVisible} />
-      <HowItWorks isVisible={isVisible} />
-      <PricingPlans
-        isVisible={isVisible}
-        openModalWithPlan={openModalWithPlan}
-      />
-      <FAQ />
-      <CTA />
-      <Footer />
-    </div>
-  );
+interface HeroProps {
+  isVisible: Record<string, boolean>;
 }
 
-export default App;
+const Hero: React.FC<HeroProps> = ({ isVisible }) => {
+  return (
+    <section
+      id="hero"
+      data-animate
+      className={`py-32 transition-all duration-1000 ${
+        isVisible.hero
+          ? "opacity-100 translate-y-0"
+          : "opacity-0 translate-y-10"
+      }`}
+    >
+      <div className="text-center">
+        <h1 className="text-5xl md:text-6xl font-bold mb-6">
+          Patungan Netflix Premium
+        </h1>
+        <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+          Nonton hemat bareng teman – mulai dari Rp21.500/orang!
+        </p>
+      </div>
+    </section>
+  );
+};
+
+export default Hero;
