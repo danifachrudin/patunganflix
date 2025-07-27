@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+
 import Header from "./components/Header";
 import Hero from "./components/Hero";
 import HowItWorks from "./components/HowItWorks";
@@ -8,34 +9,49 @@ import CTA from "./components/CTA";
 import Footer from "./components/Footer";
 
 function App() {
+  // Pastikan hero diset default agar tidak undefined
+  const [isVisible, setIsVisible] = useState<Record<string, boolean>>({
+    hero: true,
+  });
+
+  const [selectedPlan, setSelectedPlan] = useState<any>(null);
+
   useEffect(() => {
-    // Smooth scroll animation observer
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: "0px 0px -50px 0px",
-    };
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const id = entry.target.getAttribute("id");
+          if (entry.isIntersecting && id) {
+            setIsVisible((prev) => ({ ...prev, [id]: true }));
+          }
+        });
+      },
+      {
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px",
+      }
+    );
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("animate-fade-in-up");
-        }
-      });
-    }, observerOptions);
-
-    // Observe all sections
-    const sections = document.querySelectorAll(".animate-on-scroll");
+    const sections = document.querySelectorAll("[data-animate]");
     sections.forEach((section) => observer.observe(section));
 
     return () => observer.disconnect();
   }, []);
 
+  const openModalWithPlan = (plan: any) => {
+    setSelectedPlan(plan);
+    console.log("Paket dipilih:", plan);
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-black via-gray-900 to-black text-white">
+    <div className="min-h-screen bg-gradient-to-b from-black via-gray-900 to-black text-white font-poppins">
       <Header />
-      <Hero />
-      <HowItWorks />
-      <PricingPlans />
+      <Hero isVisible={isVisible} />
+      <HowItWorks isVisible={isVisible} />
+      <PricingPlans
+        isVisible={isVisible}
+        openModalWithPlan={openModalWithPlan}
+      />
       <FAQ />
       <CTA />
       <Footer />
