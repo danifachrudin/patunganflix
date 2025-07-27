@@ -4,11 +4,12 @@ import Header from "./components/Header";
 import Hero from "./components/Hero";
 import HowItWorks from "./components/HowItWorks";
 import PricingPlans from "./components/PricingPlans";
-// import FAQ from "./components/FAQ";     // Dihapus sementara
-// import CTA from "./components/CTA";     // Dihapus sementara
+import FAQ from "./components/FAQ";
+import CTA from "./components/CTA";
 import Footer from "./components/Footer";
 
 function App() {
+  // Pastikan hero diset default agar tidak undefined
   const [isVisible, setIsVisible] = useState<Record<string, boolean>>({
     hero: true,
   });
@@ -51,8 +52,8 @@ function App() {
         isVisible={isVisible}
         openModalWithPlan={openModalWithPlan}
       />
-      {/* <FAQ /> */}
-      {/* <CTA isVisible={isVisible} /> */}
+      <FAQ />
+      <CTA />
       <Footer />
     </div>
   );
