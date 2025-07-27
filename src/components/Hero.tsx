@@ -1,70 +1,71 @@
-import React from 'react';
-import { ArrowRight, Star } from 'lucide-react';
+import React from "react";
+import { MessageCircle, Users, Check, Shield, Star } from "lucide-react";
 
-const Hero: React.FC = () => {
+const Hero = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-20 left-10 w-20 h-20 border border-red-600 rounded-full animate-pulse"></div>
-        <div className="absolute top-40 right-20 w-16 h-16 border border-red-600 rounded-full animate-pulse delay-1000"></div>
-        <div className="absolute bottom-40 left-20 w-12 h-12 border border-red-600 rounded-full animate-pulse delay-2000"></div>
-      </div>
+    <section
+      id="hero"
+      className="min-h-screen pt-24 flex items-center justify-center relative overflow-hidden animate-on-scroll"
+    >
+      {/* Background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-red-900/20 via-black to-black"></div>
+      <div className="absolute inset-0 bg-[url('https://images.pexels.com/photos/3945313/pexels-photo-3945313.jpeg')] bg-cover bg-center opacity-10"></div>
 
-      <div className="container mx-auto px-4 text-center relative z-10">
-        <div className="max-w-4xl mx-auto">
-          {/* Badge */}
-          <div className="inline-flex items-center space-x-2 bg-red-600/20 border border-red-600/30 rounded-full px-4 py-2 mb-6 animate-fade-in">
-            <Star className="w-4 h-4 text-red-400 fill-current" />
-            <span className="text-red-400 font-medium text-sm">Platform Netflix Sharing Terpercaya</span>
-          </div>
-
-          {/* Main Heading */}
-          <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight animate-fade-in-up">
+      {/* Content */}
+      <div className="relative z-10 text-center max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="mb-8">
+          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
             <span className="text-white">Netflix Sharing</span>
             <br />
-            <span className="text-red-600">mulai dari 21rb/bulan</span>
+            <span className="text-red-500">mulai dari</span>
+            <br />
+            <span className="text-red-400 text-6xl sm:text-7xl lg:text-8xl">
+              21rb/bulan
+            </span>
           </h1>
-
-          {/* Subtitle */}
-          <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-2xl mx-auto animate-fade-in-up delay-200">
-            Nonton Netflix premium bareng teman-teman dengan harga yang super hemat. 
-            Legal, aman, dan mudah!
+          <p className="text-xl sm:text-2xl text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed">
+            Nonton Netflix Premium legal dan hemat bareng teman!
+            <span className="text-red-400 font-semibold">
+              {" "}
+              Kualitas 4K, tanpa iklan, akses semua konten.
+            </span>
           </p>
+        </div>
 
-          {/* Features */}
-          <div className="flex flex-wrap justify-center gap-4 mb-10 animate-fade-in-up delay-300">
-            <div className="flex items-center space-x-2 bg-gray-800/50 rounded-full px-4 py-2">
-              <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-              <span className="text-gray-300">100% Legal</span>
-            </div>
-            <div className="flex items-center space-x-2 bg-gray-800/50 rounded-full px-4 py-2">
-              <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-              <span className="text-gray-300">Ultra HD 4K</span>
-            </div>
-            <div className="flex items-center space-x-2 bg-gray-800/50 rounded-full px-4 py-2">
-              <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-              <span className="text-gray-300">Tanpa Iklan</span>
-            </div>
+        {/* Buttons */}
+        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
+          <a
+            href="https://wa.me/6281234567890?text=Halo%20PatunganFlix%2C%20saya%20mau%20gabung%20Netflix%20sharing!"
+            className="bg-red-600 hover:bg-red-700 px-8 py-4 rounded-full text-xl font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-2xl flex items-center space-x-2"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <MessageCircle className="h-6 w-6" />
+            <span>Gabung Sekarang</span>
+          </a>
+          <a
+            href="#group"
+            className="border-2 border-gray-600 hover:border-red-500 px-8 py-4 rounded-full text-xl font-semibold transition-all duration-300 flex items-center space-x-2 hover:bg-red-500/10"
+          >
+            <Users className="h-6 w-6" />
+            <span>Lihat Grup</span>
+          </a>
+        </div>
+
+        {/* Trust Info */}
+        <div className="flex justify-center space-x-8 text-sm text-gray-400">
+          <div className="flex items-center space-x-2">
+            <Check className="h-5 w-5 text-green-500" />
+            <span>100% Legal</span>
           </div>
-
-          {/* CTA Button */}
-          <div className="animate-fade-in-up delay-500">
-            <a 
-              href="https://wa.me/6281234567890?text=Halo%20PatunganFlix%2C%20saya%20mau%20gabung%20Netflix%20sharing%21"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center space-x-3 bg-red-600 hover:bg-red-700 text-white px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-red-600/50"
-            >
-              <span>Gabung Sekarang</span>
-              <ArrowRight className="w-5 h-5" />
-            </a>
+          <div className="flex items-center space-x-2">
+            <Shield className="h-5 w-5 text-blue-500" />
+            <span>Aman & Terpercaya</span>
           </div>
-
-          {/* Trust Badge */}
-          <p className="text-gray-400 mt-6 text-sm animate-fade-in-up delay-700">
-            Sudah dipercaya oleh <span className="text-red-400 font-semibold">500+ keluarga</span> di Indonesia
-          </p>
+          <div className="flex items-center space-x-2">
+            <Star className="h-5 w-5 text-yellow-500" />
+            <span>1000+ Member Aktif</span>
+          </div>
         </div>
       </div>
     </section>
