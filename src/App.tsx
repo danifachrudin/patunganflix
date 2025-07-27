@@ -9,12 +9,8 @@ import CTA from "./components/CTA";
 import Footer from "./components/Footer";
 
 function App() {
-  // Pastikan hero diset default agar tidak undefined
-  const [isVisible, setIsVisible] = useState<Record<string, boolean>>({
-    hero: true,
-  });
-
-  const [selectedPlan, setSelectedPlan] = useState<any>(null);
+  const [isVisible, setIsVisible] = useState<Record<string, boolean>>({});
+  const [selectedPlan, setSelectedPlan] = useState<any>(null); // untuk popup/modal
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -40,6 +36,7 @@ function App() {
 
   const openModalWithPlan = (plan: any) => {
     setSelectedPlan(plan);
+    // kamu bisa buka modal di sini jika kamu punya komponen modal
     console.log("Paket dipilih:", plan);
   };
 
