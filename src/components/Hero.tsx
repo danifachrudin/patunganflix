@@ -1,11 +1,20 @@
 import React from "react";
 import { MessageCircle, Users, Check, Shield, Star } from "lucide-react";
 
-const Hero = () => {
+interface HeroProps {
+  isVisible: Record<string, boolean>;
+}
+
+const Hero: React.FC<HeroProps> = ({ isVisible }) => {
   return (
     <section
       id="hero"
-      className="min-h-screen pt-24 flex items-center justify-center relative overflow-hidden animate-on-scroll"
+      data-animate
+      className={`min-h-screen pt-24 flex items-center justify-center relative overflow-hidden transition-all duration-1000 ease-out transform ${
+        isVisible?.hero
+          ? "opacity-100 translate-y-0"
+          : "opacity-0 translate-y-10"
+      }`}
     >
       {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-br from-red-900/20 via-black to-black"></div>

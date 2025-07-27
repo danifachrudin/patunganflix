@@ -1,21 +1,27 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import Header from "./components/Header";
 import Hero from "./components/Hero";
 import HowItWorks from "./components/HowItWorks";
 import PricingPlans from "./components/PricingPlans";
-import FAQ from "./components/FAQ";
-import CTA from "./components/CTA";
+// import FAQ from "./components/FAQ";     // Dihapus sementara
+// import CTA from "./components/CTA";     // Dihapus sementara
 import Footer from "./components/Footer";
 
 function App() {
+  const [isVisible, setIsVisible] = useState<Record<string, boolean>>({
+    hero: true,
+  });
+
+  const [selectedPlan, setSelectedPlan] = useState<any>(null);
+
   useEffect(() => {
-    // Observer untuk animasi scroll
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("animate-fade-in-up");
+          const id = entry.target.getAttribute("id");
+          if (entry.isIntersecting && id) {
+            setIsVisible((prev) => ({ ...prev, [id]: true }));
           }
         });
       },
@@ -25,20 +31,28 @@ function App() {
       }
     );
 
-    const sections = document.querySelectorAll(".animate-on-scroll");
+    const sections = document.querySelectorAll("[data-animate]");
     sections.forEach((section) => observer.observe(section));
 
     return () => observer.disconnect();
   }, []);
 
+  const openModalWithPlan = (plan: any) => {
+    setSelectedPlan(plan);
+    console.log("Paket dipilih:", plan);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-black via-gray-900 to-black text-white font-poppins">
       <Header />
-      <Hero />
-      <HowItWorks />
-      <PricingPlans />
-      <FAQ />
-      <CTA />
+      <Hero isVisible={isVisible} />
+      <HowItWorks isVisible={isVisible} />
+      <PricingPlans
+        isVisible={isVisible}
+        openModalWithPlan={openModalWithPlan}
+      />
+      {/* <FAQ /> */}
+      {/* <CTA isVisible={isVisible} /> */}
       <Footer />
     </div>
   );
