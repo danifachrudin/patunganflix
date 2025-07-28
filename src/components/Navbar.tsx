@@ -1,8 +1,19 @@
 import React, { useState } from 'react';
-import { Menu, X, Play } from 'lucide-react';
+import { Menu, X, Play, LogIn, User, LogOut } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { useAuth } from '../lib/AuthProvider';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { user, profile, signOut } = useAuth();
+
+  const handleSignOut = async () => {
+    try {
+      await signOut();
+    } catch (error) {
+      console.error('Sign out error:', error);
+    }
+  };
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-sm border-b border-gray-800">
@@ -27,6 +38,26 @@ const Navbar = () => {
             <a href="#faq" className="text-gray-300 hover:text-white transition-colors">
               FAQ
             </a>
+            {user ? (
+              <div className="flex items-center space-x-4">
+                <Link to="/dashboard" className="flex items-center space-x-1 text-gray-300 hover:text-white transition-colors">
+                  <User className="w-4 h-4" />
+                  <span>{profile?.role === 'admin' ? 'Admin' : 'Dashboard'}</span>
+                </Link>
+                <button 
+                  onClick={handleSignOut}
+                  className="flex items-center space-x-1 text-gray-300 hover:text-white transition-colors"
+                >
+                  <LogOut className="w-4 h-4" />
+                  <span>Logout</span>
+                </button>
+              </div>
+            ) : (
+              <Link to="/login" className="flex items-center space-x-1 text-gray-300 hover:text-white transition-colors">
+                <LogIn className="w-4 h-4" />
+                <span>Login</span>
+              </Link>
+            )}
             <button className="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-full font-medium transition-colors">
               Gabung Sekarang
             </button>
@@ -68,6 +99,37 @@ const Navbar = () => {
               >
                 FAQ
               </a>
+              {user ? (
+                <div className="space-y-1">
+                  <Link
+                    to="/dashboard"
+                    className="flex items-center space-x-1 px-3 py-2 text-gray-300 hover:text-white transition-colors"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    <User className="w-4 h-4" />
+                    <span>{profile?.role === 'admin' ? 'Admin' : 'Dashboard'}</span>
+                  </Link>
+                  <button
+                    onClick={() => {
+                      handleSignOut();
+                      setIsMenuOpen(false);
+                    }}
+                    className="flex items-center space-x-1 px-3 py-2 text-gray-300 hover:text-white transition-colors w-full text-left"
+                  >
+                    <LogOut className="w-4 h-4" />
+                    <span>Logout</span>
+                  </button>
+                </div>
+              ) : (
+                <Link
+                  to="/login"
+                  className="flex items-center space-x-1 px-3 py-2 text-gray-300 hover:text-white transition-colors"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  <LogIn className="w-4 h-4" />
+                  <span>Login</span>
+                </Link>
+              )}
               <button className="w-full text-left bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-lg font-medium transition-colors mt-2">
                 Gabung Sekarang
               </button>
